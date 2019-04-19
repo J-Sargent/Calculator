@@ -1,3 +1,6 @@
+
+/*+NEXT STEP IS CHANGING THE WHOLE FUCKING THING TO USE HTML CLASS TAG TO GET
+ALL OF THE NUMBERS FROM THE PAGE AT ONCE */
 function getNumbers(){
 	console.log('function called');
 
@@ -13,6 +16,7 @@ function getNumbers(){
 	console.log(sumOne);
 }
 
+//one linke can replace getNumbers lns 4-8
 
 
 /*
