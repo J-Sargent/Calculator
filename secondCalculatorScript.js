@@ -23,6 +23,8 @@ window.preNumbers = [];
 window.savedNumbers =[];
 window.clickNumber = 0;
 window.currentFullNumber = null;
+window.answer = null;
+window.operator = [];
 
 function reset(){
 	preNumbers =[];
@@ -39,15 +41,40 @@ function getButtons(){
 	document.getElementById("displayBox").innerHTML = currentFullNumber;
 }
 
-function sumNumbers(){
-	console.log("CurrentFullNumber is " +currentFullNumber);
+function nextOperator(){
+	console.log("CurrentFullNumber is " + currentFullNumber);
 	savedNumbers.push(currentFullNumber);
 	console.log("0 position of savedNumbers is " + savedNumbers[0]);
-	reset();
+	console.log("1 position of savedNumbers is " + savedNumbers[1]);
+	var textOperator = event.target.value;
+	console.log("The value of this button is " + textOperator);
 
+	switch(textOperator) {
+		case textOperator = "plus":
+		console.log("plus");
+		answer = savedNumbers[0] + savedNumbers[1];
+		break;
+		case textOperator = "minus":
+		console.log("minus");
+		answer = savedNumbers[0] - savedNumbers[1];
+		break;
+		default:
+		console.log("It did not work");
+	}
+		reset();
+}
+
+function displayAnswer(){
+	console.log("okkkkkkk");
+
+
+	document.getElementById("displayAnswer").innerHTML = "The final answer is " + answer;
 }
 
 
+/*
+}
+*/
 
 
 
