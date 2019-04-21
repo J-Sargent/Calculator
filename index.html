@@ -6,13 +6,27 @@
 	</head>
 	<body>
 	<p id=displayBox> Array contains </p>
-		First Button Number: <button type="button" id="firstButtonNumber" onClick=getButtons() value=5>5</button><br>
-		Second Button Number: <button type="button" id="secondButtonNumber" onClick=getButtons() value =3 >3</button><br>
+		<button type="button" onClick="getButtons()" value=1>1</button>
+		<button type="button" onClick="getButtons()" value=2>2</button>
+		<button type="button" onClick="getButtons()" value=3>3</button><br>
+		<br>
+		<button type="button" onClick="getButtons()" value=4>4</button>
+		<button type="button" onClick="getButtons()" value=5>5</button>
+		<button type="button" onClick="getButtons()" value=6>6</button><br>
+		<br>
+		<button type="button" onClick="getButtons()" value=7>7</button>
+		<button type="button" onClick="getButtons()" value=8>8</button>
+		<button type="button" onClick="getButtons()" value=9>9</button>
+		<button type="button" onClick="getButtons()" value=0>0</button><br>
+		<br>
 
 
 		<button type="button" onclick="nextOperator()" value="plus">+ (plus)</button>
 		<button type="button" onclick="nextOperator()" value="minus">- (minus)</button>
-		<button type="button" onclick="displayAnswer()" value="minus">= (displayAnswer)</button>
+		<button type="button" onclick="nextOperator()" value="multiply">* (multiply)</button>
+		<button type="button" onclick="nextOperator()" value="divide">/ (divide)</button>
+
+		<button type="button" onclick="displayAnswer()">= (displayAnswer)</button>
 
 	<p id=displayAnswer></p>
 
