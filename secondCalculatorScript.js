@@ -19,18 +19,39 @@ function getNumbers(){
 */
 
 
-var preNumbers = [];
-var clickNumber = 0;
+window.preNumbers = [];
+window.savedNumbers =[];
+window.clickNumber = 0;
+window.currentFullNumber = null;
+
+function reset(){
+	preNumbers =[];
+	//clear out displayBox
+}
 
 function getButtons(){
 	var a = event.target.value;
-	console.log(a);
+	//console.log(a);
 	preNumbers.push(a);
 	clickNumber++;
-	console.log("clicks: " + clickNumber);
-	
-	//document.getElementById("displayBox").innerHTML = "default";
+	//console.log("clicks: " + clickNumber);
+	currentFullNumber = parseInt(preNumbers.join(''));
+	document.getElementById("displayBox").innerHTML = currentFullNumber;
 }
+
+function sumNumbers(){
+	console.log("CurrentFullNumber is " +currentFullNumber);
+	savedNumbers.push(currentFullNumber);
+	console.log("0 position of savedNumbers is " + savedNumbers[0]);
+	reset();
+
+}
+
+
+
+
+
+//var fullNumber = parseInt(preNumbers.join(''));
 
 															/*
 											array demo
