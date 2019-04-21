@@ -1,6 +1,7 @@
 
-/*+NEXT STEP IS CHANGING THE WHOLE FUCKING THING TO USE HTML CLASS TAG TO GET
-ALL OF THE NUMBERS FROM THE PAGE AT ONCE */
+
+
+/*
 function getNumbers(){
 	console.log('function called');
 
@@ -15,15 +16,21 @@ function getNumbers(){
 	var sumOne = newNumbers[0] + newNumbers[1];
 	console.log(sumOne);
 }
+*/
+
+
+var preNumbers = [];
+var clickNumber = 0;
 
 function getButtons(){
-	console.log("getbuttons was called");
-	var numberButtons = [];
-	numberButtons = document.getElementsByClassName('numberButtons');
-	console.log(numberButtons.item(0) + ", " + numberButtons.item(1));
+	var a = event.target.value;
+	console.log(a);
+	preNumbers.push(a);
+	clickNumber++;
+	console.log("clicks: " + clickNumber);
+	
+	//document.getElementById("displayBox").innerHTML = "default";
 }
-//one lineI  can replace getNumbers lns 4-8
-
 
 															/*
 											array demo
