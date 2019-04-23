@@ -8,15 +8,14 @@ window.equationString = "The equation is "; //turn this into an array next array
 window.symbols = ['/','*','-','+'];
 
 //typing
-
 function keyPress(e){
 	var key = e.key;
-if (!isNaN(key)) {makeNumber(key);
-}
+if (!isNaN(key)) {makeNumber(key);}
 else if(symbols.indexOf(key) >= 0) {
 	console.log("a symbol" + key)
-	keyOperator(key);
-	}
+	keyOperator(key);	}
+else if (e.keyCode === 13) { console.log("you pressed enter");
+displayAnswer();}
 }
 addEventListener('keydown', keyPress);
 
@@ -36,12 +35,11 @@ function makeNumber(a){
 	currentFullNumber = parseInt(preNumbers);
 	var displayBox = document.getElementById("displayBox");
 	displayBox.textContent = currentFullNumber + " ";
-	updateDisplay(a); //fix display at some point
+	updateDisplay(a);
 }
 
 //capture operators
 function nextOperator(){
-	//console.log("nextOperator called with key " + key);
 	if (currentFullNumber) {	//this does the same thing as currentFullNumber !== null
 		savedNumbers.push(currentFullNumber);
 	}
@@ -52,7 +50,7 @@ function nextOperator(){
 }
 
 function keyOperator(key){
-	if (currentFullNumber) {	//this does the same thing as currentFullNumber !== null
+	if (currentFullNumber) {
 		savedNumbers.push(currentFullNumber);
 	}
 	textOperator = key;
