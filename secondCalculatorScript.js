@@ -1,9 +1,18 @@
-window.preNumbers = 0;
+window.preNumbers = "";
 window.savedNumbers =[];
 window.currentFullNumber = null;
 window.answer = null;
 window.textOperator;
+window.keyThatWasPressed = null;
 
+//typing
+function keyPress(e){
+	var key = e.key;
+	makeNumber(key);
+}
+addEventListener('keydown', keyPress);
+
+//reset
 function reset(){
 	preNumbers = [];
 	savedNumbers = [];
@@ -12,19 +21,18 @@ function reset(){
 	//clear out displayBox
 }
 
-function getButtons(){
-	var a = event.target.value;
+//capture numbers
+function makeNumber(a){
 	preNumbers += a;
 	currentFullNumber = parseInt(preNumbers);
 	var displayBox = document.getElementById("displayBox");
-	displayBox.textContent += currentFullNumber + " ";
+	displayBox.textContent = currentFullNumber + " "; //fix display at some point
 }
 
+//capture operators
 function nextOperator(){
 	textOperator = "huh";
-	if (currentFullNumber == null) {
-
-	} else {
+	if (currentFullNumber) {	//this does the same thing as currentFullNumber !== null
 		savedNumbers.push(currentFullNumber);
 	}
 	textOperator = event.target.value;
@@ -33,6 +41,7 @@ function nextOperator(){
 	currentFullNumber = null;
 }
 
+//maths
 function displayAnswer(){
 	savedNumbers.push(currentFullNumber);
 	switch(textOperator) {
