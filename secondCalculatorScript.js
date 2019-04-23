@@ -1,4 +1,4 @@
-window.preNumbers = [];
+window.preNumbers = 0;
 window.savedNumbers =[];
 window.currentFullNumber = null;
 window.answer = null;
@@ -6,42 +6,52 @@ window.textOperator;
 
 function reset(){
 	preNumbers = [];
+	savedNumbers = [];
+	currentFullNumber = null;
+	answer = null;
 	//clear out displayBox
 }
 
 function getButtons(){
 	var a = event.target.value;
-	preNumbers.push(a);
-	currentFullNumber = parseInt(preNumbers.join(''));
-	document.getElementById("displayBox").innerHTML = currentFullNumber;
+	preNumbers += a;
+	currentFullNumber = parseInt(preNumbers);
+	var displayBox = document.getElementById("displayBox");
+	displayBox.textContent += currentFullNumber + " ";
 }
 
 function nextOperator(){
-	savedNumbers.push(currentFullNumber);
+	textOperator = "huh";
+	if (currentFullNumber == null) {
+
+	} else {
+		savedNumbers.push(currentFullNumber);
+	}
 	textOperator = event.target.value;
-	reset();
+	displayBox.textContent += textOperator + " ";
+	preNumbers = [];
+	currentFullNumber = null;
 }
 
 function displayAnswer(){
 	savedNumbers.push(currentFullNumber);
-
 	switch(textOperator) {
-		case "plus":
+		case "+":
 		answer = savedNumbers[0] + savedNumbers[1];
 		parseInt(answer);
 		break;
 
-		case "minus":
+		case "-":
 		answer = savedNumbers[0] - savedNumbers[1];
 		parseInt(answer);
 		break;
 
-		case "multiply":
+		case "*":
 		answer = savedNumbers[0] * savedNumbers[1];
 		parseInt(answer);
 		break;
 
-		case "divide":
+		case "/":
 		answer = savedNumbers[0] / savedNumbers[1];
 		parseInt(answer);
 		break;
@@ -49,7 +59,10 @@ function displayAnswer(){
 		default:
 		console.log("It did not work");
 	}
-savedNumbers = [];
-savedNumbers.push(answer);
+
 	document.getElementById("displayAnswer").innerHTML = "The final answer is: " + answer;
+	savedNumbers = [];
+	savedNumbers.push(answer);
+	preNumbers = 0;
+	currentFullNumber = null;
 }
