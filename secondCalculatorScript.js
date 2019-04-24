@@ -57,7 +57,6 @@ function keyOperator(key){
 		savedNumbers.push(currentFullNumber);
 	}
 	operatorSymbols = key;
-  console.log("in keyOperator the operatorSymbols is " + operatorSymbols);
 	updateDisplay(operatorSymbols);
 	preNumbers = [];
 	currentFullNumber = null;
@@ -72,19 +71,27 @@ function orderCalculations(){
 	console.log(savedOperators);
 
 	while(savedOperators.length > 0){
-	if (savedOperators.indexOf('*') >= 0){
+		console.log("top");
+	if ((savedOperators.indexOf('*') <= savedOperators.indexOf('/') || null) && savedOperators.indexOf('*') >= 0){
+console.log("if started");
 		operatorIndex = savedOperators.indexOf('*');
 		answer = savedNumbers[operatorIndex] * savedNumbers[operatorIndex+1];
+		console.log("You multipled " + savedNumbers[operatorIndex] + " by " + savedNumbers[operatorIndex+1] + " to get " + answer);
 		savedNumbers.splice(operatorIndex, 2, answer);
 		savedOperators.splice(operatorIndex,1);
 		}
-	else if (savedOperators.indexOf('/') >= 0){
+		else {console.log("fuck"); return;}
+			/*(savedOperators.indexOf('/') >= 0){
 			operatorIndex = savedOperators.indexOf('/');
 			answer = savedNumbers[operatorIndex] / savedNumbers[operatorIndex+1];
+			console.log("You divided " + savedNumbers[operatorIndex] + " by " + savedNumbers[operatorIndex+1] + " to get " + answer);
 			savedNumbers.splice(operatorIndex, 2, answer);
 			savedOperators.splice(operatorIndex,1);
+			console.log("savedOperators after divide " +savedOperators);*/
 				}
-	else if (savedOperators.indexOf('+') >= 0){
+}
+/*
+	else if (savedOperators.indexOf('+') < savedOperators.indexOf('-') && savedOperators.indexOf('+') >= 0){
 			operatorIndex = savedOperators.indexOf('+');
 			answer = savedNumbers[operatorIndex] + savedNumbers[operatorIndex+1];
 			savedNumbers.splice(operatorIndex, 2, answer);
@@ -95,8 +102,8 @@ function orderCalculations(){
 			answer = savedNumbers[operatorIndex] - savedNumbers[operatorIndex+1];
 			savedNumbers.splice(operatorIndex, 2, answer);
 			savedOperators.splice(operatorIndex,1);
-					}
-	}
+		}*/
+
 	document.getElementById("displayAnswer").innerHTML = "The final answer is: " + answer;
 }
 
