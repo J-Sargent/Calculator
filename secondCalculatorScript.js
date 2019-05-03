@@ -1,21 +1,30 @@
 window.preNumbers = "";
 window.savedNumbers =[];
+window.savedOperators =[];
 window.currentFullNumber = null;
 window.answer = null;
-window.textOperator;
-window.keyThatWasPressed = null;
+window.operatorSymbols;
 window.equationString = "The equation is "; //turn this into an array next arrayName.join(" ");
-window.symbols = ['/','*','-','+'];
+window.symbolKeys = ['/','*','-','+'];
+var order = [
+	['parentheses'],
+	['exponenents'],
+	['*','/'],
+	['+', '-']
+];
+
+
 
 //typing
 function keyPress(e){
 	var key = e.key;
 if (!isNaN(key)) {makeNumber(key);}
-else if(symbols.indexOf(key) >= 0) {
-	console.log("a symbol" + key)
+else if(symbolKeys.indexOf(key) >= 0) {
 	keyOperator(key);	}
 else if (e.keyCode === 13) { console.log("you pressed enter");
-displayAnswer();}
+//displayAnswer();
+calculate();
+}
 }
 addEventListener('keydown', keyPress);
 
@@ -43,56 +52,55 @@ function nextOperator(){
 	if (currentFullNumber) {	//this does the same thing as currentFullNumber !== null
 		savedNumbers.push(currentFullNumber);
 	}
-	textOperator = event.target.value;
-	updateDisplay(textOperator);
+	operatorSymbols = event.target.value;
+	updateDisplay(operatorSymbols);
 	preNumbers = [];
 	currentFullNumber = null;
+	savedOperators.push(operatorSymbols);
 }
 
 function keyOperator(key){
 	if (currentFullNumber) {
 		savedNumbers.push(currentFullNumber);
 	}
-	textOperator = key;
-  console.log("in keyOperator the textOperator is " + textOperator);
-	updateDisplay(textOperator);
+	operatorSymbols = key;
+	updateDisplay(operatorSymbols);
 	preNumbers = [];
 	currentFullNumber = null;
+	savedOperators.push(operatorSymbols);
 }
 
 //maths
-function displayAnswer(){
+
+function calculate(){
+	console.log("Called calculate()");
+	operatorLength = savedOperators.length;
+	if (operatorLength > 0){orderCalculate()}
+	else {console.log("The final answer is: " + answer);}
+}
+
+function orderTest(a,b){
+	var priorityOperatorPosition = a;
+	var secondaryOperatorPosition = b;
+	if(secondaryOperatorPosition>priorityOperatorPosition && secondaryOperatorPosition>=0){return true;}
+		else{return false;}
+}
+
+
+function orderCalculate(){
 	savedNumbers.push(currentFullNumber);
-	switch(textOperator) {
-		case "+":
-		answer = savedNumbers[0] + savedNumbers[1];
-		parseInt(answer);
-		break;
+	console.log("The list of savedNumbers is: " + savedNumbers);
+	console.log("The list of savedOperators is: " + savedOperators);
 
-		case "-":
-		answer = savedNumbers[0] - savedNumbers[1];
-		parseInt(answer);
-		break;
-
-		case "*":
-		answer = savedNumbers[0] * savedNumbers[1];
-		parseInt(answer);
-		break;
-
-		case "/":
-		answer = savedNumbers[0] / savedNumbers[1];
-		parseInt(answer);
-		break;
-
-		default:
-		console.log("It did not work");
-	}
-
-	document.getElementById("displayAnswer").innerHTML = "The final answer is: " + answer;
-	savedNumbers = [];
-	savedNumbers.push(answer);
-	preNumbers = 0;
-	currentFullNumber = null;
+if (orderTest(savedOperators.indexOf('+'),savedOperators.indexOf('-'))){
+	operatorIndex = savedOperators.indexOf('-');
+	answer = savedNumbers[operatorIndex] - savedNumbers[operatorIndex+1];
+	console.log("the answer is " + answer);
+	savedNumbers.splice(operatorIndex, 2, answer);
+	savedOperators.splice(operatorIndex,1);
+	calculate();
+}
+else{console.log("something went wrong");}
 }
 
 //display update
@@ -107,5 +115,5 @@ function updateDisplay(b){
 	//console.log("count before iteration is " +count);
 	//count = count++;
 	//console.log(count);
-	//document.getElementById("equationBox").innerHTML = currentFullNumber + textOperator;
+	//document.getElementById("equationBox").innerHTML = currentFullNumber + operatorSymbols;
 }
