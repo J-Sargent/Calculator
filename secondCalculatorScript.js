@@ -23,7 +23,7 @@ else if(symbolKeys.indexOf(key) >= 0) {
 	keyOperator(key);	}
 else if (e.keyCode === 13) { console.log("you pressed enter");
 //displayAnswer();
-calculate();
+getOrder();
 }
 }
 addEventListener('keydown', keyPress);
@@ -72,7 +72,7 @@ function keyOperator(key){
 
 //maths
 
-function calculate(){
+/*function calculate(){
 	console.log("Called calculate()");
 	operatorLength = savedOperators.length;
 	if (operatorLength > 0){orderCalculate()}
@@ -101,7 +101,70 @@ if (orderTest(savedOperators.indexOf('+'),savedOperators.indexOf('-'))){
 	calculate();
 }
 else{console.log("something went wrong");}
+}*/
+var y = 0;
+
+function getOrder(){
+		for (var x = 0; x < order.length;x++) {
+			var operatorRow = order[x];
+			for (y = 0; y < savedOperators.length;){  //y++ causing issues
+				console.log("y = " + y);
+				currentOperator = savedOperators[y];
+				if (operatorRow.indexOf(currentOperator) >-1){
+					calculate(currentOperator);
+				}
+					else {console.log("In else function, now y++");
+					y++;
+				}
+			}
+		}
+
 }
+
+//INDEX OF CALCULATE OPERATOR IS THE PROBLEM
+
+
+function calculate(calculateOperator,y){
+	console.log("calculate called. calculateOperator is " + calculateOperator);
+	//switch will go here w/ numbers ad calculateOperator
+	switch (calculateOperator){
+		case "*":
+			console.log("multiply");
+			console.log("index of calculateOperator is: " + savedOperators.indexOf[calculateOperator],1);
+			savedOperators.splice(savedOperators.indexOf[calculateOperator],1);
+			console.log("savedOperators after splice: " + savedOperators);
+			y = 0;
+			break;
+		case "/":
+			console.log("divide");
+			console.log("index of calculateOperator is: " + savedOperators.indexOf[calculateOperator],1);
+			savedOperators.splice(savedOperators.indexOf[calculateOperator],1);
+			console.log("savedOperators after splice: " + savedOperators);
+			y = 0;
+			break;
+		case "+":
+			console.log("add");
+			console.log("index of calculateOperator is: " + savedOperators.indexOf[calculateOperator],1);
+			savedOperators.splice(savedOperators.indexOf[calculateOperator],1);
+			console.log("savedOperators after splice: " + savedOperators);
+			y = 0;
+			break;
+		case "-":
+			console.log("subtract");
+			console.log("index of calculateOperator is: " + savedOperators.indexOf[calculateOperator],1);
+			savedOperators.splice(savedOperators.indexOf[calculateOperator],1);
+			console.log("savedOperators after splice: " + savedOperators);
+			y = 0;
+			break;
+		default:
+			console.log("woops, something went wrong");
+			return;
+	}
+}
+
+
+
+
 
 //display update
 
