@@ -18,12 +18,21 @@ var order = [
 //typing
 function keyPress(e){
 	var key = e.key;
-if (!isNaN(key)) {makeNumber(key);}
-else if(symbolKeys.indexOf(key) >= 0) {
-	keyOperator(key);	}
-else if (e.keyCode === 13) { console.log("you pressed enter");
-displayAnswer();
-}
+	console.log("var key is " + key);
+	if (!isNaN(key)) {makeNumber(key);
+		console.log("you pressed a number");
+	}
+		else if(symbolKeys.indexOf(key) >= 0) {
+				console.log("you pressed an operator");
+				keyOperator(key);
+		}
+				else if(key == "Enter") {
+					console.log("you pressed enter");
+					displayAnswer();
+				}
+					else if(key == "Backspace") {
+						console.log("you pressed backspace");
+					}
 }
 addEventListener('keydown', keyPress);
 
