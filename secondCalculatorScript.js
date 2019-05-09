@@ -3,8 +3,8 @@ window.savedNumbers =[];
 window.savedOperators =[];
 window.currentFullNumber = "";
 window.answer = null;
-window.operatorSymbols;
-window.equationString = []; //turn this into an array next arrayName.join(" ");
+window.operatorSymbol = "";
+window.equationString = [];
 window.symbolKeys = ['/','*','-','+'];
 var equationBox = document.getElementById("equationBox");
 var order = [
@@ -14,16 +14,15 @@ var order = [
 	['+', '-']
 ];
 
-//typing
+//key captures
 function keyPress(e){
 	var key = e.key;
-	console.log("var key is " + key);
-	if (!isNaN(key)) {makeNumber(key);
+	if (!isNaN(key)) {captureNumber(key);
 		console.log("you pressed a number");
 	}
 		else if(symbolKeys.indexOf(key) >= 0) {
 				console.log("you pressed an operator");
-				keyOperator(key);
+				nextOperator(key);
 		}
 				else if(key == "Enter") {
 					console.log("you pressed enter");
@@ -35,87 +34,87 @@ function keyPress(e){
 					}
 						else if(key =="."){
 							console.log("you pressed a decimal");
-							makeNumber(key);
+							captureNumber(key);
 						}
 }
 
 addEventListener('keydown', keyPress);
 
+//Use backspace button to remove last number/operator
 function undo(){
-	console.log("savedOperators.length " + savedOperators.length);
-	console.log("savedNumbers.length " + savedOperators.length);
-
 	if(currentFullNumber){
+			console.log("current full number before: " +currentFullNumber + "with length: " + currentFullNumber.length);
 			if(currentFullNumber.length = 1){
+				console.log("length is one");
 				currentFullNumber = "";
-				console.log("currentFullNumber's length was one, it is now" + currentFullNumber);
+				popDisplay();
 			}
 				else{
 					var sliceCurrentFullNumber = currentFullNumber.slice(0,-1);
-					console.log("sliceCurrentFullNumber after slice: " + sliceCurrentFullNumber);
 					currentFullNumber =sliceCurrentFullNumber;
+					popDisplay();
+					console.log("currentFullNumber after: " +currentFullNumber)
 				}
 	}
 		else if(savedOperators.length == savedNumbers.length){
 		console.log("operators before pop: " + savedOperators);
 		savedOperators.pop();
-		equationString.pop();
-		equationBox.textContent = equationString.join(" ");
+		popDisplay();
+		console.log("operators after pop: " + savedOperators);
 	}
 				else {
+				console.log("savednumbers before pop: " +savedNumbers);
 				savedNumbers.pop();
-				equationString.pop();
-				equationBox.textContent = equationString.join(" ");
+				popDisplay();
+				console.log("savedNumbersa after pop: " + savedNumbers);
 			}
 }
 
+// removes focus from button that was clicked last, to prevent interference if enter key is pressed wile a number is in focus.
+function removeFocus(){
+	var x = document.getElementsByTagName("button");
+	console.log("removeFocus called.  x.length is " + x.length);
+	for (i = 0; i < x.length; i++){
+		x[i].blur();
+	}
+}
 
-//reset
+//If reset button is clicked, clear ALL information from fields.  Also used in displayAnswer to erase everything and then replace certain variables.
 function reset(){
-	preNumbers = [];
+	preNumbers = "";
 	savedNumbers = [];
+	savedOperators =[];
 	currentFullNumber = "";
 	answer = null;
-	savedOperators =[];
-	operatorSymbols = "";
+	operatorSymbol ="";
 	equationString = [];
 	equationBox.innerHTML ="Please type/click a number/decimal";
-
-	answerBox.innerHTML ="Answer will appear here";
+	console.log("calculator reset");
+	//document.getElementById("resetButton").blur();
+	removeFocus();
 }
 
 //capture numbers
-function makeNumber(a){
+function captureNumber(a){
 	currentFullNumber += a;
-	updateDisplay(a);
-
+	pushDisplay(a);
+	removeFocus();
 }
 
 //capture operators
-function nextOperator(){
+function nextOperator(a){
 	if (currentFullNumber) {	//this does the same thing as currentFullNumber !== null
 		savedNumbers.push(parseFloat(currentFullNumber));
-		//updateDisplay(currentFullNumber);
 	}
-	operatorSymbols = event.target.value;
-	updateDisplay(" " + operatorSymbols + " ");
+	operatorSymbol = a; //
+	pushDisplay(" " + operatorSymbol + " ");
 	preNumbers = [];
 	currentFullNumber = "";
-	savedOperators.push(operatorSymbols);
+	savedOperators.push(operatorSymbol);
+	removeFocus();
 }
 
-function keyOperator(key){
-	if (currentFullNumber) {
-		savedNumbers.push(parseFloat(currentFullNumber));
-		//updateDisplay(currentFullNumber); //may need removed if equationString array doesnot work
-	}
-	operatorSymbols = key;
-	updateDisplay(" " + operatorSymbols + " ");
-	preNumbers = [];
-	currentFullNumber = "";
-	savedOperators.push(operatorSymbols);
-}
-
+//decides order of operations
 function getOrder(){
 	savedNumbers.push(parseFloat(currentFullNumber));
 	for (var x = 0; x < order.length;x++) {
@@ -129,6 +128,7 @@ function getOrder(){
 	}
 }
 
+//calculates based on getOrder
 function calculate(calculateOperator){
 	operatorIndex = savedOperators.indexOf(calculateOperator);
 	switch (calculateOperator){
@@ -157,16 +157,32 @@ function calculate(calculateOperator){
 	console.log("current answer is: " + answer);
 }
 
-function updateDisplay(b){
+//adds numbers/operators to display
+function pushDisplay(b){
 	equationString.push(b);
 	equationBox.textContent = equationString.join("");
 }
 
+//removes numbers/operators to display
+function popDisplay(){
+	equationString.pop();
+	equationBox.textContent = equationString.join("");
+}
+
+//runs functions to get total, display it, erase fields, and replace fields for continued calcuations.
 function displayAnswer(){
-	getOrder();
-	console.log(equationString);
-	var move = answer
-	reset();
-	savedNumbers = [move];
-	updateDisplay(move);
+	if(savedNumbers.length >= 1){
+		getOrder();
+		console.log(equationString);
+		console.log(answer);
+		var move = answer
+		reset();
+		savedNumbers = [move];
+		pushDisplay(move);
+	}
+		else{ //this handles things if there isn't anything in savedNumbers because an operator hasn't been hit yet
+			savedNumbers.push(parseFloat(currentFullNumber))
+			currentFullNumber = "";
+			console.log(savedNumbers);
+		}
 }
