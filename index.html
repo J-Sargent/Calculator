@@ -7,9 +7,9 @@
 	<body>
 	<br>
 <h2>Current Number</h2>
-<p id = displayBox>not started yet</p>
+<p id = displayBox>Please type/click a number/decimal</p>
 <h2>Full Equation</h2>
-	<p id=equationBox>Click or type</p>
+	<p id=equationBox>Equation will appear here</p>
 
 		<button type="button" onClick="makeNumber(1)">1</button>
 		<button type="button" onClick="makeNumber(2)">2</button>
@@ -29,12 +29,13 @@
 		<button type="button" onclick="nextOperator()" value="+">+ (plus)</button>
 		<button type="button" onclick="nextOperator()" value="-">- (minus)</button>
 		<button type="button" onclick="nextOperator()" value="*">* (multiply)</button>
-		<button type="button" onclick="nextOperator()" value="/">/ (divide)</button>
-
+		<button type="button" onclick="nextOperator()" value="/">/ (divide)</button><br>
+		<br>
 		<button type="button" onclick="displayAnswer()"> = </button>
+		<button type="button" onclick="reset()">CLEAR FORMULA</button>
 
 	<h2> Answer: </h2>
-	<p id=answerBox></p>
+	<p id=answerBox>Answer will appear here</p>
 
 	</body>
 	<script src="secondCalculatorScript.js"></script>
