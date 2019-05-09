@@ -56,6 +56,8 @@ function nextOperator(){
 	preNumbers = [];
 	currentFullNumber = null;
 	savedOperators.push(operatorSymbols);
+	var displayBox = document.getElementById("displayBox");
+	displayBox.textContent = "";
 }
 
 function keyOperator(key){
@@ -67,6 +69,8 @@ function keyOperator(key){
 	preNumbers = [];
 	currentFullNumber = null;
 	savedOperators.push(operatorSymbols);
+	var displayBox = document.getElementById("displayBox");
+	displayBox.textContent = "";
 }
 
 //maths
