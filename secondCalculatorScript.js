@@ -1,11 +1,13 @@
 window.preNumbers = "";
 window.savedNumbers =[];
 window.savedOperators =[];
-window.currentFullNumber = null;
+window.currentFullNumber = "";
 window.answer = null;
 window.operatorSymbols;
-window.equationString = "The equation is "; //turn this into an array next arrayName.join(" ");
+window.equationString = []; //turn this into an array next arrayName.join(" ");
 window.symbolKeys = ['/','*','-','+'];
+var equationBox = document.getElementById("equationBox");
+var displayBox = document.getElementById("displayBox");
 var order = [
 	['parentheses'],
 	['exponenents'],
@@ -32,38 +34,67 @@ function keyPress(e){
 				}
 					else if(key == "Backspace") {
 						console.log("you pressed backspace");
+						undo();
 					}
 }
 addEventListener('keydown', keyPress);
+
+function undo(){
+	console.log("savedOperators.length " + savedOperators.length);
+	console.log("savedNumbers.length " + savedOperators.length);
+
+	if(currentFullNumber){
+			if(currentFullNumber.length = 1){
+				currentFullNumber = "";
+				console.log("currentFullNumber's length was one, it is now" + currentFullNumber);
+				displayBox.textContent = currentFullNumber;
+			}
+				else{
+					var sliceCurrentFullNumber = currentFullNumber.slice(0,-1);
+					console.log("sliceCurrentFullNumber after slice: " + sliceCurrentFullNumber);
+					currentFullNumber =sliceCurrentFullNumber;
+				}
+	}
+		else if(savedOperators.length == savedNumbers.length){
+		console.log("operators before pop: " + savedOperators);
+		savedOperators.pop();
+		equationString.pop();
+		equationBox.textContent = equationString.join(" ");
+	}
+				else {
+				savedNumbers.pop();
+				equationString.pop();
+				equationBox.textContent = equationString.join(" ");
+			}
+}
 
 
 //reset
 function reset(){
 	preNumbers = [];
 	savedNumbers = [];
-	currentFullNumber = null;
+	currentFullNumber = "";
 	answer = null;
 	//clear out displayBox
 }
 
 //capture numbers
 function makeNumber(a){
-	preNumbers += a;
-	currentFullNumber = parseInt(preNumbers);
-	var displayBox = document.getElementById("displayBox");
-	displayBox.textContent = currentFullNumber + " ";
-	updateDisplay(a);
+	currentFullNumber += a;
+	displayBox.innerHTML = currentFullNumber;
+
 }
 
 //capture operators
 function nextOperator(){
 	if (currentFullNumber) {	//this does the same thing as currentFullNumber !== null
-		savedNumbers.push(currentFullNumber);
+		savedNumbers.push(parseFloat(currentFullNumber));
+		updateDisplay(currentFullNumber);
 	}
 	operatorSymbols = event.target.value;
 	updateDisplay(operatorSymbols);
 	preNumbers = [];
-	currentFullNumber = null;
+	currentFullNumber = "";
 	savedOperators.push(operatorSymbols);
 	var displayBox = document.getElementById("displayBox");
 	displayBox.textContent = "";
@@ -71,12 +102,13 @@ function nextOperator(){
 
 function keyOperator(key){
 	if (currentFullNumber) {
-		savedNumbers.push(currentFullNumber);
+		savedNumbers.push(parseFloat(currentFullNumber));
+		updateDisplay(currentFullNumber); //may need removed if equationString array doesnot work
 	}
 	operatorSymbols = key;
 	updateDisplay(operatorSymbols);
 	preNumbers = [];
-	currentFullNumber = null;
+	currentFullNumber = "";
 	savedOperators.push(operatorSymbols);
 	var displayBox = document.getElementById("displayBox");
 	displayBox.textContent = "";
@@ -116,11 +148,11 @@ else{console.log("something went wrong");}
 }*/
 
 function getOrder(){
-	savedNumbers.push(currentFullNumber);
+	updateDisplay(currentFullNumber);
+	savedNumbers.push(parseFloat(currentFullNumber));
 	for (var x = 0; x < order.length;x++) {
 		var operatorRow = order[x];
 		for (var y = 0; y < savedOperators.length; y++){
-			console.log("y = " + y);
 			currentOperator = savedOperators[y];
 			if (operatorRow.indexOf(currentOperator) >-1){
 				calculate(currentOperator);
@@ -131,7 +163,6 @@ function getOrder(){
 
 
 function calculate(calculateOperator){
-	console.log("calculate called. calculateOperator is " + calculateOperator);
 	operatorIndex = savedOperators.indexOf(calculateOperator);
 	switch (calculateOperator){
 		case "*":
@@ -161,21 +192,12 @@ function calculate(calculateOperator){
 
 
 function updateDisplay(b){
-	equationString += b;
-	var equationBox = document.getElementById("equationBox");
-	equationBox.textContent = equationString;
-	//document.getElementById("equationBox").innerHTML = equationString;
-	//console.log("updateDisplay called");
-	//var count;
-	//console.log("count before iteration is " +count);
-	//count = count++;
-	//console.log(count);
-	//document.getElementById("equationBox").innerHTML = currentFullNumber + operatorSymbols;
+	equationString.push(b);
+	equationBox.textContent = equationString.join(" ");
 }
 
 function displayAnswer(){
 	getOrder();
-	console.log("the final answer is: " + answer);
 	var answerBox = document.getElementById("answerBox");
 	answerBox.innerHTML = answer;
 }
