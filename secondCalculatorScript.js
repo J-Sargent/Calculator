@@ -22,7 +22,6 @@ if (!isNaN(key)) {makeNumber(key);}
 else if(symbolKeys.indexOf(key) >= 0) {
 	keyOperator(key);	}
 else if (e.keyCode === 13) { console.log("you pressed enter");
-getOrder();
 displayAnswer();
 }
 }
@@ -162,6 +161,7 @@ function updateDisplay(b){
 }
 
 function displayAnswer(){
+	getOrder();
 	console.log("the final answer is: " + answer);
 	var answerBox = document.getElementById("answerBox");
 	answerBox.innerHTML = answer;
