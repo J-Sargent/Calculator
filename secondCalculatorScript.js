@@ -13,9 +13,11 @@ var order = [["parentheses"], ["exponenents"], ["*", "/"], ["+", "-"]];
 function keyPress(e) {
 	var key = e.key;
 	if (!isNaN(key)) {
+		// Consider using Number.isInteger()
 		captureNumber(key);
 		console.log("you pressed a number");
 	} else if (symbolKeys.indexOf(key) >= 0) {
+		// I prefer > -1 instead of >= 0
 		console.log("you pressed an operator");
 		nextOperator(key);
 	} else if (key == "Enter") {
@@ -30,10 +32,11 @@ function keyPress(e) {
 	}
 }
 
-addEventListener("keydown", keyPress);
+addEventListener("keydown", keyPress); // Move this to the top
 
 //Use backspace button to remove last number/operator
 function undo() {
+	// If every single option ends with popDisplay(), then have that run at the end after all of the if/else statements
 	if (currentFullNumber) {
 		console.log(
 			"current full number before: " +
@@ -42,12 +45,13 @@ function undo() {
 				currentFullNumber.length
 		);
 		if ((currentFullNumber.length = 1)) {
+			// double parens, and that should be ==
 			console.log("length is one");
 			currentFullNumber = "";
 			popDisplay();
 		} else {
 			var sliceCurrentFullNumber = currentFullNumber.slice(0, -1);
-			currentFullNumber = sliceCurrentFullNumber;
+			currentFullNumber = sliceCurrentFullNumber; // You can safely write currentFullNumber = currentFullNumber.slice(0, -1); without breaking it
 			popDisplay();
 			console.log("currentFullNumber after: " + currentFullNumber);
 		}
@@ -66,13 +70,14 @@ function undo() {
 
 // removes focus from button that was clicked last, to prevent interference if enter key is pressed wile a number is in focus.
 function removeFocus() {
-	var x = document.getElementsByTagName("button");
+	var x = document.getElementsByTagName("button"); // More descriptive variable name here please.
 	for (i = 0; i < x.length; i++) {
+		// please use var i here. Otherwise you're declaring i in the global scope.
 		x[i].blur();
 	}
 }
 
-//If reset button is clicked, clear ALL information from fields.  Also used in displayAnswer to erase everything and then replace certain variables.
+// If reset button is clicked, clear ALL information from fields.  Also used in displayAnswer to erase everything and then replace certain variables.
 function reset() {
 	preNumbers = "";
 	savedNumbers = [];
@@ -100,7 +105,7 @@ function nextOperator(a) {
 		//this does the same thing as currentFullNumber !== null
 		savedNumbers.push(parseFloat(currentFullNumber));
 	}
-	operatorSymbol = a; //
+	operatorSymbol = a;
 	pushDisplay(" " + operatorSymbol + " ");
 	preNumbers = [];
 	currentFullNumber = "";
@@ -110,7 +115,7 @@ function nextOperator(a) {
 
 //decides order of operations
 function getOrder() {
-	savedNumbers.push(parseFloat(currentFullNumber));
+	savedNumbers.push(parseFloat(currentFullNumber)); // This is really weird here. Can we move this farther up the execution order?
 	for (var x = 0; x < order.length; x++) {
 		var operatorRow = order[x];
 		for (var y = 0; y < savedOperators.length; y++) {
@@ -163,13 +168,14 @@ function popDisplay() {
 	equationBox.textContent = equationString.join("");
 }
 
-//runs functions to get total, display it, erase fields, and replace fields for continued calcuations.
+//runs functions to get total, display it, erase fields, and replace fields for continued calculations.
 function displayAnswer() {
 	if (savedNumbers.length >= 1) {
+		// > 0 also works here, and implies what you're avoiding more easily
 		getOrder();
 		console.log(equationString);
 		console.log(answer);
-		var move = answer;
+		var move = answer; // Leave a note here explaining this, and rename this to something more explicit
 		reset();
 		savedNumbers = [move];
 		pushDisplay(move);

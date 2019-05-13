@@ -1,33 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 	<head>
-		<meta charset="utf-8">
+		<meta charset="utf-8" />
 		<title>Jessica's Calculator: index.html</title>
 	</head>
 	<body>
-		<br>
+		<br />
 		<h2>Calculator</h2>
-		<p id=equationBox>Please type/click a number/decimal</p>
-		<button type="button" tagname="removefocus" onClick="captureNumber(1)">1</button>
-		<button type="button" tagname="removefocus" onClick="captureNumber(2)">2</button>
-		<button type="button" tagname="removefocus" onClick="captureNumber(3)">3</button><br>
-		<br>
-		<button type="button" tagname="removefocus" onClick="captureNumber(4)">4</button>
-		<button type="button" tagname="removefocus" onClick="captureNumber(5)">5</button>
-		<button type="button" tagname="removefocus" onClick="captureNumber(6)">6</button><br>
-		<br>
-		<button type="button" tagname="removefocus" onClick="captureNumber(7)">7</button>
-		<button type="button" tagname="removefocus" onClick="captureNumber(8)">8</button>
-		<button type="button" tagname="removefocus" onClick="captureNumber(9)">9</button>
-		<button type="button" tagname="removefocus" onClick="captureNumber(0)">0</button><br>
-		<br>
-		<button type="button" tagname="removefocus" onclick="nextOperator('+')">+ (plus)</button>
-		<button type="button" tagname="removefocus" onclick="nextOperator('-')">- (minus)</button>
-		<button type="button" tagname="removefocus" onclick="nextOperator('*')">* (multiply)</button>
-		<button type="button" tagname="removefocus" onclick="nextOperator('/')">/ (divide)</button><br>
-		<br>
-		<button type="button" tagname="removefocus" onclick="displayAnswer()"> = </button>
-		<button type="button" tagname="removefocus" id="resetButton" onclick="reset()">CLEAR FORMULA</button>
+		<p id="equationBox">Please type/click a number/decimal</p>
+		<button type="button" tagname="removefocus" onClick="captureNumber(1)">
+			1
+		</button>
+		<button type="button" tagname="removefocus" onClick="captureNumber(2)">
+			2
+		</button>
+		<button type="button" tagname="removefocus" onClick="captureNumber(3)">
+			3</button
+		><br />
+		<br />
+		<button type="button" tagname="removefocus" onClick="captureNumber(4)">
+			4
+		</button>
+		<button type="button" tagname="removefocus" onClick="captureNumber(5)">
+			5
+		</button>
+		<button type="button" tagname="removefocus" onClick="captureNumber(6)">
+			6</button
+		><br />
+		<br />
+		<button type="button" tagname="removefocus" onClick="captureNumber(7)">
+			7
+		</button>
+		<button type="button" tagname="removefocus" onClick="captureNumber(8)">
+			8
+		</button>
+		<button type="button" tagname="removefocus" onClick="captureNumber(9)">
+			9
+		</button>
+		<button type="button" tagname="removefocus" onClick="captureNumber(0)">
+			0</button
+		><br />
+		<br />
+		<button type="button" tagname="removefocus" onclick="nextOperator('+')">
+			+ (plus)
+		</button>
+		<button type="button" tagname="removefocus" onclick="nextOperator('-')">
+			- (minus)
+		</button>
+		<button type="button" tagname="removefocus" onclick="nextOperator('*')">
+			* (multiply)
+		</button>
+		<button type="button" tagname="removefocus" onclick="nextOperator('/')">
+			/ (divide)</button
+		><br />
+		<br />
+		<button type="button" tagname="removefocus" onclick="displayAnswer()">
+			=
+		</button>
+		<button
+			type="button"
+			tagname="removefocus"
+			id="resetButton"
+			onclick="reset()"
+		>
+			CLEAR FORMULA
+		</button>
 	</body>
 	<script src="secondCalculatorScript.js"></script>
 </html>
