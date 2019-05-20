@@ -63,3 +63,6 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# service account credentials
+jessica-calculator-firebase-adminsdk-lheer-388a33efcf.json
