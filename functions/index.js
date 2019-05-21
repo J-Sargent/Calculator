@@ -10,11 +10,13 @@ const db = admin.database();
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
-exports.helloWorld = functions.https.onRequest((request, response) => {
-	console.log("helloWorld");
-	response.send("Hello from Firebase!");
+exports.helloWorld = functions.https.onRequest((req, res) => {
+	console.log("Back end: helloWorld");
+	res.send("Hello from Firebase!");
 });
 
+// POST
+// body: { item: calculatorResult }
 exports.addHistoryItem = functions.https.onRequest((req, res) => {
 	console.log("addHistoryItem");
 	const body = JSON.parse(req.body);
